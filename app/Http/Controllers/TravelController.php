@@ -60,7 +60,7 @@ class TravelController extends Controller
     public function showBySlug($slug)
     {
         $travel = Travel::where('slug',$slug)->firstOrFail();
-        $tours = Tour::where('travel_id', $travel->id)->paginate( $this->paginationValue );
+        $tours = Tour::where('travel_id', $travel->id)->orderBy('starting_date')->paginate( $this->paginationValue );
 
         return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);   
     }
@@ -85,18 +85,20 @@ class TravelController extends Controller
         if (isset($request->priceTo))
             $tours->where( 'price', '<=', $request->priceTo);
         if (isset($request->startingDate)){
-
-            
-            $start = Carbon::parse( '2021/10/03' );
-            // dd( $start );
-            
             $tours->where( 'starting_date', '>=', $request->startingDate);
         }
-            
-                    
-        // dd( $tours );
-
+        if (isset($request->endingDate)){
+            $tours->where( 'ending_date', '<=', $request->endingDate);
+        }
+        if (isset($request->sortingPrice)){
+            $tours->orderBy('price', $request->sortingPrice);
+        }
+           
         $tours = $tours->paginate( $this->paginationValue );
+
+        
+        $sortedResult = $tours->getCollection()->sortBy('starting_date')->values();
+        $tours->setCollection($sortedResult);
         
         return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);   
     }

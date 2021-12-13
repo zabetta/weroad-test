@@ -14,7 +14,7 @@
     <form action="" method="post">
         @csrf
         <input type="hidden" name="travelId" value="{{$travel->id}}">
-        <label for="priceFrom">
+        <label for="priceFrom">Price from <br/>
             <select name="priceFrom" id="priceFrom">
                 <option value="">Select price from</option>
                 <option value="100">@convert(100)</option>
@@ -24,7 +24,7 @@
                 <option value="500000">@convert(500000)</option>
             </select>
         </label>
-        <label for="priceTo">
+        <label for="priceTo">Price to <br/>
             <select name="priceTo" id="priceTo">
                 <option value="">Select price to</option>
                 <option value="100">@convert(100)</option>
@@ -34,13 +34,18 @@
                 <option value="500000">@convert(500000)</option>
             </select>
         </label>
-        <label for="startingDate">
-            <input type="text"  id="startingDate" class="datepicker">
-            <input type="text"  name="startingDateHidden" id="startingDateHidden" >
+        <label for="startingDate">Starting Date <br/>
+            <input type="text"  id="startingDate" name="startingDate" class="datepicker">
         </label>
-        <label for="endingDate">
-            <input type="text"  id="endingDate" class="datepicker">
-            <input type="text"  name="endingDateHidden" id="endingDateHidden" >
+        <label for="endingDate">Ending Date <br/>
+            <input type="text"  id="endingDate" name="endingDate" class="datepicker">
+        </label>
+        <label for="sortingPrice">Sort by price <br/>
+            <select name="sortingPrice" id="sortingPrice">
+                <option value="">Sort method</option>
+                <option value="asc">asc</option>
+                <option value="desc">desc</option>
+            </select>
         </label>
         <input type="submit" value="filter">
     </form>
@@ -74,20 +79,7 @@
     <script>
         $( function() {
             $( ".datepicker" ).datepicker({
-                dateFormat: 'd/m/yy'
-            });
-            $( "#startingDate" ).change( function(){
-                $date = $(this).datepicker('getDate');
-                formatted = new Date( $date ).formatDate('yy/mm/dd');
-                alert( formatted );
-                // $( "#startingDateHidden" ).val( 
-                    
-                    
-                //     // $(this).datepicker( "option", "dateFormat", "yy-mm-dd" ).val()
-                // );
-            });
-            $( ".datepicker" ).change( function(){
-                $('#endingDateHidden').val( $('#endingDate').datepicker('getDate') );
+                dateFormat: 'yy-m-d'
             });
         } );
     </script>
