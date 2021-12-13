@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TravelController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,8 +18,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/travels', [TravelController::class,'index'])->name('travels.getAll');
+Route::get('/travels/{slug}', [TravelController::class,'showBySlug'])->name('travels.details');
+Route::post('/travels/{slug}', [TravelController::class,'filterTours'])->name('travels.filter');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+
+
 
 require __DIR__.'/auth.php';
