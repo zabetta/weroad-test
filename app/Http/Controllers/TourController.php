@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
+use App\Models\Travel;
 
 class TourController extends Controller
 {
@@ -30,7 +30,7 @@ class TourController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tour.create', ['travels' => Travel::all() ]);
     }
 
     /**
@@ -41,7 +41,7 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

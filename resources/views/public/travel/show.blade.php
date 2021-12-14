@@ -11,7 +11,7 @@
     </div>
     <hr>
     <p><b>Tours</b></p>
-    <form action="" method="post">
+    <form action="" method="post" autocomplete="off">
         @csrf
         <input type="hidden" name="travelId" value="{{$travel->id}}">
         <label for="priceFrom">Price from <br/>

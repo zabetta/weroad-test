@@ -4,7 +4,7 @@
     <div class="row">
         <div class="h1">Create New Travel</div>
     </div>
-    <form action="{{route('travels.store')}}" method="POST">
+    <form action="{{route('travels.store')}}" method="POST" autocomplete="off">
         @csrf
         <div class="form-group mx-sm-3">
             <label for="slug">Slug</label>

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TravelController;
+use App\Http\Controllers\TourController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +27,9 @@ Route::get('/travels/create', [TravelController::class,'create'])->middleware(['
 Route::post('/travels/save', [TravelController::class,'store'])->name('travels.store');
 Route::get('/travels/{slug}', [TravelController::class,'showBySlug'])->name('travels.details');
 Route::post('/travels/{slug}', [TravelController::class,'filterTours'])->name('travels.filter');
+
+Route::get('/tours/create', [TourController::class,'create'])->middleware(['auth'])->name('tours.create');
+Route::post('/tours/save', [TourController::class,'store'])->name('tours.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
