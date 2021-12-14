@@ -18,14 +18,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('/travels', [TravelController::class,'index'])->name('travels.getAll');
+Route::get('/travels/create', [TravelController::class,'create'])->middleware(['auth'])->name('travels.create');
+Route::post('/travels/save', [TravelController::class,'store'])->name('travels.store');
 Route::get('/travels/{slug}', [TravelController::class,'showBySlug'])->name('travels.details');
 Route::post('/travels/{slug}', [TravelController::class,'filterTours'])->name('travels.filter');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
-
 
 
 

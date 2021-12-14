@@ -10,7 +10,6 @@ use App\Models\Tour;
 
 class TravelController extends Controller
 {
-
     protected $paginationValue;
 
     public function __construct()
@@ -37,7 +36,7 @@ class TravelController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.travel.create');
     }
 
     /**
@@ -48,7 +47,33 @@ class TravelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            'description' => 'required',
+            'numberOfDays' => 'required|numeric',
+            'nature' => 'required|numeric|between:0,100',
+            'relax' => 'required|numeric|between:0,100',
+            'history' => 'required|numeric|between:0,100',
+            'culture' => 'required|numeric|between:0,100',
+            'party' => 'required|numeric|between:0,100',
+        ]);
+
+        $data = [
+            'name' => $request->input('name'),
+            'slug' => $request->input('slug'),
+            'description' => $request->input('description'),
+            'number_of_days' => $request->input('numberOfDays'),
+            'moods' => json_encode ([
+                'nature' => $request->input('nature'),
+                'relax' => $request->input('relax'),
+                'history' => $request->input('history'),
+                'culture' => $request->input('culture'),
+                'party' => $request->input('party'),
+            ]),
+        ];
+
+        Travel::create($data);
     }
 
     /**
