@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Travel;
+use App\Models\Tour;
 
 class TourController extends Controller
 {
@@ -52,7 +53,13 @@ class TourController extends Controller
      */
     public function show($id)
     {
-        //
+
+        if ( null == $id )
+            abort(503);
+        
+        $tourData = Tour::find($id);
+
+        return view('public.tour.show', ['tour' => $tourData ]);
     }
 
     /**

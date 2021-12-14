@@ -3,7 +3,10 @@
 @section('content')
 
 Travel Details
-
-    {{$travel}}
-
+    <pre>
+    id: {{$tour->id}}
+    travel_id: {{$tour->travel_id}}
+    name: {{$tour->name}}
+    starting_date: {{$tour->starting_date}}
+    </pre>
 @stop

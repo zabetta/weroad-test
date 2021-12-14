@@ -31,6 +31,9 @@ Route::post('/travels/{slug}', [TravelController::class,'filterTours'])->name('t
 Route::get('/tours/create', [TourController::class,'create'])->middleware(['auth'])->name('tours.create');
 Route::post('/tours/save', [TourController::class,'store'])->name('tours.store');
 
+//single tour by id (7)
+Route::get('/tours/{id}', [TourController::class,'show'])->name('tours.details');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
