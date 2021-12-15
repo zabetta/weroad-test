@@ -42,6 +42,41 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validated = $request->validate([
+            'travelId' => 'required',
+            'name' => 'required',
+            'startingDate' => 'required',
+            'endingDate' => 'required',
+            'price' => 'required'
+        ]);
+        
+        $data = [
+            'travel_id' => $request->input('travelId'),
+            'name' => $request->input('name'),
+            'starting_date' => $request->input('startingDate'),
+            'ending_date' => $request->input('endingDate'),
+            'price' => (int)$request->input('price')*100,
+        ];
+        
+        try {
+            
+            Tour::create($data);
+            
+            
+        } catch (\Illuminate\Database\QueryException $exception) {
+                
+            return view('admin.tour.create', [
+                'travels' => Travel::all(), 
+                'messageKo' => $exception->errorInfo
+            ]);
+            
+        }
+
+        return view('admin.tour.create', [
+            'messageOk' => 'Tour created',
+            'travels' => Travel::all()
+        ]);
         
     }
 
@@ -55,7 +90,7 @@ class TourController extends Controller
     {
 
         if ( null == $id )
-            abort(503);
+            abort();
         
         $tourData = Tour::find($id);
 

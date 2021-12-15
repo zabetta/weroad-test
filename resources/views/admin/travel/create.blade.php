@@ -1,6 +1,18 @@
 @extends('layouts.public')
 
 @section('content')
+
+    @if(isset($messageOk))
+        <div class="alert alert-success" role="alert">
+            {{$messageOk}}
+        </div>
+    @endif
+    @if(isset($messageKo))
+        <div class="alert alert-danger" role="alert">
+            {{$messageKo}}
+        </div>
+    @endif
+
     <div class="row">
         <div class="h1">Create New Travel</div>
     </div>

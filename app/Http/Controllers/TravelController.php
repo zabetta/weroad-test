@@ -73,7 +73,15 @@ class TravelController extends Controller
             ]),
         ];
 
-        Travel::create($data);
+        try {
+            Travel::create($data);
+            
+        } catch (\Illuminate\Database\QueryException $exception) {
+                   
+            return view('admin.travel.create', ['messageKo' => $exception->errorInfo]);
+        }
+
+        return view('admin.travel.create', ['messageOk' => 'Travel created']);
     }
 
     /**
