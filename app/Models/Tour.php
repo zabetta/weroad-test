@@ -6,6 +6,8 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Travel;
+
 class Tour extends Model
 {
     use Uuids;
@@ -19,7 +21,7 @@ class Tour extends Model
         'price'
     ];
 
-    public function tours(){
-        return $this->belongsTo(Travel::class,'travel_id','id');
+    public function getTravel(){
+        return $this->belongsTo(Travel::class, 'travel_id', 'id');
     }
 }

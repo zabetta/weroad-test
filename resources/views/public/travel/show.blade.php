@@ -92,7 +92,7 @@
 
     @foreach ($tours as $tour)
         <div class="row">
-            <div class="col-md-1"> - </div>
+            <div class="col-md-1"> <a href="{{route('tours.show',$tour->id )}}"><button>show</button></a> </div>
             <div class="col-md-3">
                 {{ \Carbon\Carbon::parse($tour->starting_date)->format('d m Y')}}
             </div>

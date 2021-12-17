@@ -96,8 +96,13 @@ class TourController extends Controller
             abort();
         
         $tourData = Tour::find($id);
+        $travelData = $tourData->getTravel()->first();
+        $travelData->moods = json_decode( $travelData->moods );
 
-        return view('public.tour.show', ['tour' => $tourData ]);
+        return view('public.tour.show', [
+            'tour' => $tourData,
+            'travel' => $travelData 
+        ]);
     }
 
     /**

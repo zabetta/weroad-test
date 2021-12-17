@@ -151,6 +151,7 @@ class TravelController extends Controller
     public function show($id)
     {
         $travel = Travel::where('id',$id)->firstOrFail();
+        
         $travel->moods = json_decode($travel->moods);
     
         $tours = Tour::where('travel_id', $travel->id)->paginate( $this->paginationValue );
