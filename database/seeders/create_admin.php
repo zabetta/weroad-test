@@ -8,7 +8,7 @@ use App\Models\role_user;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
-class createAdminUser extends Seeder
+class create_admin extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,8 +22,7 @@ class createAdminUser extends Seeder
         $adminRole = Role::where('name','admin')->firstOrFail();
 
         $user = User::create([
-            'name' => 'admin',
-            'email' => 'admin@weroad.com',
+            'email' => 'admin@weroad.it',
             'password' => $password
         ]);
         
