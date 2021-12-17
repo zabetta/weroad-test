@@ -4,8 +4,8 @@
 
 <div class="row">
     @foreach ($travels as $travel)
-        <div class="col-md-12">
-            <strong>{{$travel->name}}</strong>
+        <div class="col-md-12"style="margin-top:5px">
+            <strong>{{$travel->name}}</strong><br>
             <a href="{{route('travels.show',$travel->id)}}">
                     <button>
                         show
@@ -21,7 +21,7 @@
         </div>
     @endforeach
 
-    <div class="col-md-12">
+    <div class="col-md-12" style="margin-top:50px">
         {{$travels->render()}}
     </div>
 </div>
