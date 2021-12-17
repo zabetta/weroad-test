@@ -27,8 +27,10 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
      
         Gate::define('update-travel', function ($user) {
-            
-            return $user->id == $post->user_id;
+            return in_array($user->getRole()->name, ['admin','editor']);            
+        });
+        Gate::define('edit-travel', function ($user) {
+            return in_array($user->getRole()->name, ['admin','editor']);            
         });
 
     }

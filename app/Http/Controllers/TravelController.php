@@ -165,9 +165,6 @@ class TravelController extends Controller
      */
     public function edit($id)
     {       
-
-        dd( Auth::user()->getRoles()->get() );
-
         if (Gate::allows('edit-travel')) {
             echo 'Allowed';
         } else {
