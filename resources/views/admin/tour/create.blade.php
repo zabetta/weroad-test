@@ -12,22 +12,14 @@
         </div>
     @endif
     <div class="row">
-        <div class="h1">Create New Tour </div>
+        <div class="h1">Create New Tour for Travel {{$travel->name}}</div>
     </div>
     <form action="{{route('tours.store')}}" method="POST" autocomplete="off">
         @csrf
         <div class="form-group mx-sm-3">
-            <label for="slug">Travels</label>
-            <select class="form-control" id="travelId" name="travelId">
-                <option value="">Select one travel</option>
-                @foreach($travels as $travel)
-                <option value="{{$travel->id}}">{{$travel->name}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group mx-sm-3">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Enter travel name">
+            <input type="hidden" name="travelId" value={{$travel->id}}>
         </div>
         <div class="form-group mx-sm-3">
             <label for="startingDate">Starting Date <br/>

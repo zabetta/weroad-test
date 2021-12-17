@@ -5,7 +5,19 @@
 <div class="row">
     @foreach ($travels as $travel)
         <div class="col-md-12">
-            <a href="{{route('travels.details',$travel->slug)}}">{{$travel->name}}</a>
+            <strong>{{$travel->name}}</strong>
+            <a href="{{route('travels.show',$travel->id)}}">
+                    <button>
+                        show
+                    </button>
+                </a>
+            @if (Auth::check())
+                <a href="{{route('travels.edit',$travel->id)}}">
+                    <button>
+                        edit
+                    </button>
+                </a>  
+            @endif
         </div>
     @endforeach
 

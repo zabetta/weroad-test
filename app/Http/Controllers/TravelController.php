@@ -27,6 +27,7 @@ class TravelController extends Controller
      */
     public function index()
     {
+     
         $travels = Travel::paginate( $this->paginationValue );
 
         return view('public.travel.index', ['travels'=> $travels]);
@@ -78,7 +79,6 @@ class TravelController extends Controller
 
         try {
             Travel::create($data);
-            
         } catch (\Illuminate\Database\QueryException $exception) {
                    
             return view('admin.travel.create', ['messageKo' => $exception->errorInfo]);
@@ -109,11 +109,14 @@ class TravelController extends Controller
      */
     public function filterTours(Request $request)
     {
-        // $validated = $request->validate([
-        //     'travelId' => 'required'
-        // ]);
+        $request->flash();
+        
+        $validated = $request->validate([
+            'travelId' => 'required'
+        ]);
 
         $travel = Travel::where('id',$request->travelId)->firstOrFail();
+        $travel->moods = json_decode($travel->moods);
 
         $tours = Tour::where('travel_id', $travel->id);
         if (isset($request->priceFrom))
@@ -147,10 +150,10 @@ class TravelController extends Controller
      */
     public function show($id)
     {
-
         $travel = Travel::where('id',$id)->firstOrFail();
+        $travel->moods = json_decode($travel->moods);
     
-        $tours = Tour::where('travel_id', $travel->id)->paginate( $this->paginateValue );
+        $tours = Tour::where('travel_id', $travel->id)->paginate( $this->paginationValue );
 
         return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);
         
@@ -165,10 +168,15 @@ class TravelController extends Controller
      */
     public function edit($id)
     {       
+
+        $travel = Travel::find($id);
+
+        $travel->moods = json_decode($travel->moods);
+
         if (Gate::allows('edit-travel')) {
-            echo 'Allowed';
+            return view('admin.travel.edit',['travel' => $travel]);
         } else {
-            echo 'Not Allowed';
+            abort(403);
         }
          
     }
@@ -177,15 +185,53 @@ class TravelController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         if (Gate::allows('update-travel')) {
-            echo 'Allowed';
+            $validated = $request->validate([
+                'id' => 'required',
+                'name' => 'required',
+                'slug' => 'required',
+                'description' => 'required',
+                'numberOfDays' => 'required|numeric',
+                'nature' => 'required|numeric|between:0,100',
+                'relax' => 'required|numeric|between:0,100',
+                'history' => 'required|numeric|between:0,100',
+                'culture' => 'required|numeric|between:0,100',
+                'party' => 'required|numeric|between:0,100',
+            ]);
+
+            $data = [
+                'name' => $request->input('name'),
+                'slug' => $request->input('slug'),
+                'description' => $request->input('description'),
+                'number_of_days' => $request->input('numberOfDays'),
+                'moods' => json_encode ([
+                    'nature' => $request->input('nature'),
+                    'relax' => $request->input('relax'),
+                    'history' => $request->input('history'),
+                    'culture' => $request->input('culture'),
+                    'party' => $request->input('party'),
+                ]),
+            ];
+
+            try {
+                $id = Travel::where('id', $request->input('id'))->update($data);
+                $travel = Travel::find($request->input('id'));
+                $travel->moods = json_decode($travel->moods);
+                return view('admin.travel.edit', [
+                    $request->input('id'),
+                    'travel' => $travel,
+                    'messageOk' => 'Travel Updated'
+                ]);
+                
+            } catch (\Illuminate\Database\QueryException $exception) {
+                return view('admin.travel.edit',[$request->input('id'),'messageKo' => $exception->errorInfo]);
+            }       
         } else {
-            echo 'Not Allowed';
+            abort(403);
         }
     }
 

@@ -15,6 +15,17 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('travels.all')" :active="request()->routeIs('travels.all')">
+                        {{ __('Travels') }}
+                    </x-nav-link>
+                        @isRole('admin')
+                            <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                                {{ __('Create User') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('travels.create')" :active="request()->routeIs('travels.create')">
+                                {{ __('Create Travel') }}
+                            </x-nav-link>
+                        @endisRole
                 </div>
             </div>
 

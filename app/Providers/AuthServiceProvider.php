@@ -32,6 +32,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('edit-travel', function ($user) {
             return in_array($user->getRole()->name, ['admin','editor']);            
         });
+        Gate::define('user-create', function ($user) {
+            return in_array($user->getRole()->name, ['admin']);            
+        });
 
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Gate;
 
 class RegisteredUserController extends Controller
 {
@@ -22,8 +23,13 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        return view('auth.register', ['roles' => $roles ]);
+
+        if (Gate::allows('user-create')) {
+            $roles = Role::all();
+            return view('auth.register', ['roles' => $roles ]);
+        }
+        abort(403);
+        
     }
 
     /**
@@ -36,27 +42,31 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::allows('user-create')) {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'role_id' => ['required', 'string'],
+            ]);
 
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
-        role_user::create([
-            'user_id' => $user->id,
-            'role_id' => $request->role_id
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+            role_user::create([
+                'user_id' => $user->id,
+                'role_id' => $request->role_id
+            ]);
+    
+            event(new Registered($user));
+    
+            Auth::login($user);
+    
+            return redirect(RouteServiceProvider::HOME);
+        } else {
+            abort(403);
+        }        
     }
 }

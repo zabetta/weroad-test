@@ -22,29 +22,27 @@ Route::get('/', function () {
 
 
 //list of travels ()
-Route::get('/travels', [TravelController::class,'index'])->name('travels.getAll');
-
+Route::get('/travels', [TravelController::class,'index'])->name('travels.all');
+Route::get('/travels/view/{id}', [TravelController::class,'show'])->name('travels.show');
 //travel creation (if auth) (2)
 Route::get('/travels/create', [TravelController::class,'create'])->middleware(['auth'])->name('travels.create');
 Route::post('/travels/save', [TravelController::class,'store'])->name('travels.store');
-
-//tour creation (if auth) (3)
-Route::get('/tours/create', [TourController::class,'create'])->middleware(['auth'])->name('tours.create');
-Route::post('/tours/save', [TourController::class,'store'])->name('tours.store');
-
 //travel edit and update (if auth) (4)
 Route::get('/travels/edit/{id}', [TravelController::class,'edit'])->middleware(['auth'])->name('travels.edit');
-Route::put('/travels/store', [TravelController::class,'store'])->name('travels.store');
+Route::post('/travels/update', [TravelController::class,'update'])->name('travels.update');
+
+//tour creation (if auth) (3)
+Route::get('/tours/create/{id}', [TourController::class,'create'])->middleware(['auth'])->name('tours.create');
+Route::post('/tours/save', [TourController::class,'store'])->name('tours.store');
+
+//single tour by id (7)
+Route::get('/tours/{id}', [TourController::class,'show'])->name('tours.details');
+
 
 //single travel by slug (6)
 Route::get('/travels/{slug}', [TravelController::class,'showBySlug'])->name('travels.details');
 //single travel by slug with filters
-Route::post('/travels/{slug}', [TravelController::class,'filterTours'])->name('travels.filter');
-
-
-
-//single tour by id (7)
-Route::get('/tours/{id}', [TourController::class,'show'])->name('tours.details');
+Route::post('/travels', [TravelController::class,'filterTours'])->name('travels.filter');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

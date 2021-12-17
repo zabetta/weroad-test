@@ -51,9 +51,9 @@
                 <x-label for="role" :value="__('User role')" />
 
                 <select class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" name="role_id" required>
-                    <option>Select user role</option>
+                    <option value = "">Select user role</option>
                     @foreach ($roles as $role)
-                    
+                
                         <option value="{{ $role->id }}"> 
                             {{ $role->name }} 
                         </option>

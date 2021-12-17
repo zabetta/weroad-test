@@ -26,12 +26,12 @@ class TourController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @param  uuid  $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('admin.tour.create', ['travels' => Travel::all() ]);
+        return view('admin.tour.create', ['travel' =>Travel::findOrFail($id) ]);
     }
 
     /**
@@ -42,7 +42,7 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $validated = $request->validate([
             'travelId' => 'required',
             'name' => 'required',
@@ -51,6 +51,9 @@ class TourController extends Controller
             'price' => 'required'
         ]);
         
+
+        // TODO check starting date and endingdate with number of nights
+
         $data = [
             'travel_id' => $request->input('travelId'),
             'name' => $request->input('name'),
@@ -67,7 +70,7 @@ class TourController extends Controller
         } catch (\Illuminate\Database\QueryException $exception) {
                 
             return view('admin.tour.create', [
-                'travels' => Travel::all(), 
+                'travel' => Travel::find($request->input('travelId')), 
                 'messageKo' => $exception->errorInfo
             ]);
             
@@ -75,7 +78,7 @@ class TourController extends Controller
 
         return view('admin.tour.create', [
             'messageOk' => 'Tour created',
-            'travels' => Travel::all()
+            'travel' => Travel::find($request->input('travelId'))
         ]);
         
     }
