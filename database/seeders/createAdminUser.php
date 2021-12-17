@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Role;
-use App\Models\roles_user;
+use App\Models\role_user;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
@@ -23,11 +23,11 @@ class createAdminUser extends Seeder
 
         $user = User::create([
             'name' => 'admin',
-            'email' => 'admin@mweroad.com',
+            'email' => 'admin@weroad.com',
             'password' => $password
         ]);
         
-        $role_user = roles_user::create([
+        $role_user = role_user::create([
             'user_id' => $user->id,
             'role_id' => $adminRole->id
         ]);
