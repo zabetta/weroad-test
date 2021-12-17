@@ -27,7 +27,7 @@ class travels extends Seeder
                 "slug" => $value->slug,
                 "name" => $value->name,
                 "description" => $value->description,
-                "number_of_days" => $value->numberOfDays,
+                "numberOfDays" => $value->numberOfDays,
                 "moods" => json_encode( $value->moods )
             ]);
         }
@@ -44,7 +44,7 @@ class travels extends Seeder
         //         "slug" => $travel->slug,
         //         "name" => $travel->name,
         //         "description" => $travel->description,
-        //         "number_of_days" => $travel->numberOfDays,
+        //         "numberOfDays" => $travel->numberOfDays,
         //         "moods" => json_encode($travel->moods),
         //     ]);
         // }

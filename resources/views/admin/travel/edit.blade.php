@@ -34,7 +34,7 @@
         </div>
         <div class="form-group mx-sm-3">
             <label for="numberOfDays">number of days</label>
-            <input type="number" class="form-control" id="numberOfDays" name="numberOfDays" value="{{$travel->number_of_days}}" placeholder="Enter travel numberOfDays">
+            <input type="number" class="form-control" id="numberOfDays" name="numberOfDays" value="{{$travel->numberOfDays}}" placeholder="Enter travel numberOfDays">
         </div>
         <div class="form-group mx-sm-3">
             <label for="Nature">Nature Mood</label>

@@ -14,14 +14,14 @@ class Tour extends Model
     use HasFactory;
 
     protected $fillable = [
-        'travel_id',
+        'travelId',
         'name',
-        'starting_date',
-        'ending_date',
+        'startingDate',
+        'endingDate',
         'price'
     ];
 
     public function getTravel(){
-        return $this->belongsTo(Travel::class, 'travel_id', 'id');
+        return $this->belongsTo(Travel::class, 'travelId', 'id');
     }
 }

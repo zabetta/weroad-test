@@ -19,7 +19,7 @@ class Travel extends Model
         'slug',
         'name',
         'description',
-        'number_of_days',
+        'numberOfDays',
         'moods',
     ];
 

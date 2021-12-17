@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-12">
             <label for="duration">duration:</label><br>
-                {{$travel->number_of_days}} Days ({{$travel->number_of_days - 1}} night)
+                {{$travel->numberOfDays}} Days ({{$travel->numberOfDays - 1}} night)
         </div>
         <div class="col-md-2">
             <label for="moods-nature">nature:</label><br>
@@ -45,12 +45,12 @@
                 {{$tour->name}}
         </div>
         <div class="col-md-12">
-            <label for="starting_date">starting_date:</label><br>
-                 {{ \Carbon\Carbon::parse($tour->starting_date)->format('d m Y')}}
+            <label for="startingDate">startingDate:</label><br>
+                 {{ \Carbon\Carbon::parse($tour->startingDate)->format('d m Y')}}
         </div>
         <div class="col-md-12">
-            <label for="ending_date">ending_date:</label><br>
-                 {{ \Carbon\Carbon::parse($tour->ending_date)->format('d m Y')}}
+            <label for="endingDate">endingDate:</label><br>
+                 {{ \Carbon\Carbon::parse($tour->endingDate)->format('d m Y')}}
         </div>
     </div>   
 @stop

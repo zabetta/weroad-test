@@ -67,7 +67,7 @@ class TravelController extends Controller
             'name' => $request->input('name'),
             'slug' => $request->input('slug'),
             'description' => $request->input('description'),
-            'number_of_days' => $request->input('numberOfDays'),
+            'numberOfDays' => $request->input('numberOfDays'),
             'moods' => json_encode ([
                 'nature' => $request->input('nature'),
                 'relax' => $request->input('relax'),
@@ -96,7 +96,7 @@ class TravelController extends Controller
     public function showBySlug($slug)
     {
         $travel = Travel::where('slug',$slug)->firstOrFail();
-        $tours = Tour::where('travel_id', $travel->id)->orderBy('starting_date')->paginate( $this->paginationValue );
+        $tours = Tour::where('travelId', $travel->id)->orderBy('startingDate')->paginate( $this->paginationValue );
 
         return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);   
     }
@@ -118,16 +118,16 @@ class TravelController extends Controller
         $travel = Travel::where('id',$request->travelId)->firstOrFail();
         $travel->moods = json_decode($travel->moods);
 
-        $tours = Tour::where('travel_id', $travel->id);
+        $tours = Tour::where('travelId', $travel->id);
         if (isset($request->priceFrom))
             $tours->where('price', '>=', $request->priceFrom);
         if (isset($request->priceTo))
             $tours->where( 'price', '<=', $request->priceTo);
         if (isset($request->startingDate)){
-            $tours->where( 'starting_date', '>=', $request->startingDate);
+            $tours->where( 'startingDate', '>=', $request->startingDate);
         }
         if (isset($request->endingDate)){
-            $tours->where( 'ending_date', '<=', $request->endingDate);
+            $tours->where( 'endingDate', '<=', $request->endingDate);
         }
         if (isset($request->sortingPrice)){
             $tours->orderBy('price', $request->sortingPrice);
@@ -136,7 +136,7 @@ class TravelController extends Controller
         $tours = $tours->paginate( $this->paginationValue );
 
         
-        $sortedResult = $tours->getCollection()->sortBy('starting_date')->values();
+        $sortedResult = $tours->getCollection()->sortBy('startingDate')->values();
         $tours->setCollection($sortedResult);
         
         return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);   
@@ -154,7 +154,7 @@ class TravelController extends Controller
         
         $travel->moods = json_decode($travel->moods);
     
-        $tours = Tour::where('travel_id', $travel->id)->paginate( $this->paginationValue );
+        $tours = Tour::where('travelId', $travel->id)->paginate( $this->paginationValue );
 
         return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);
         
@@ -208,7 +208,7 @@ class TravelController extends Controller
                 'name' => $request->input('name'),
                 'slug' => $request->input('slug'),
                 'description' => $request->input('description'),
-                'number_of_days' => $request->input('numberOfDays'),
+                'numberOfDays' => $request->input('numberOfDays'),
                 'moods' => json_encode ([
                     'nature' => $request->input('nature'),
                     'relax' => $request->input('relax'),

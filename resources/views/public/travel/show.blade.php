@@ -25,7 +25,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            Duration : {{$travel->number_of_days}} Days ( {{$travel->number_of_days - 1}} Nights )
+            Duration : {{$travel->numberOfDays}} Days ( {{$travel->numberOfDays - 1}} Nights )
         </div>
     </div>
     <hr>
@@ -94,10 +94,10 @@
         <div class="row">
             <div class="col-md-1"> <a href="{{route('tours.show',$tour->id )}}"><button>show</button></a> </div>
             <div class="col-md-3">
-                {{ \Carbon\Carbon::parse($tour->starting_date)->format('d m Y')}}
+                {{ \Carbon\Carbon::parse($tour->startingDate)->format('d m Y')}}
             </div>
             <div class="col-md-4">
-                {{ \Carbon\Carbon::parse($tour->ending_date)->format('d m Y')}}
+                {{ \Carbon\Carbon::parse($tour->endingDate)->format('d m Y')}}
             </div>
             <div class="col-md-4">
                 @convert($tour->price)

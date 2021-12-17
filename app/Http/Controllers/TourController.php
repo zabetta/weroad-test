@@ -55,10 +55,10 @@ class TourController extends Controller
         // TODO check starting date and endingdate with number of nights
 
         $data = [
-            'travel_id' => $request->input('travelId'),
+            'travelId' => $request->input('travelId'),
             'name' => $request->input('name'),
-            'starting_date' => $request->input('startingDate'),
-            'ending_date' => $request->input('endingDate'),
+            'startingDate' => $request->input('startingDate'),
+            'endingDate' => $request->input('endingDate'),
             'price' => (int)$request->input('price')*100,
         ];
         

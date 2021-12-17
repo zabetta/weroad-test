@@ -24,10 +24,10 @@ class tours extends Seeder
         foreach ($tours as $key => $value) {
             Tour::create([
                 "id" => $value->id,
-                "travel_id" => $value->travelId,
+                "travelId" => $value->travelId,
                 "name" => $value->name,
-                "starting_date" => $value->startingDate,
-                "ending_date" => $value->endingDate,
+                "startingDate" => $value->startingDate,
+                "endingDate" => $value->endingDate,
                 "price" => $value->price,
             ]);
         }

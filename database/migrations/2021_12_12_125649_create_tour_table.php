@@ -15,10 +15,10 @@ class CreateTourTable extends Migration
     {
         Schema::create('tours', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('travel_id');
+            $table->uuid('travelId');
             $table->string('name');
-            $table->datetime('starting_date');
-            $table->datetime('ending_date');
+            $table->datetime('startingDate');
+            $table->datetime('endingDate');
             $table->integer('price');
             $table->timestamps();
         });

@@ -18,7 +18,7 @@ class CreateTravelTable extends Migration
             $table->string('slug');
             $table->string('name');
             $table->text('description');
-            $table->smallInteger('number_of_days');
+            $table->smallInteger('numberOfDays');
             $table->json('moods');
             $table->timestamps();
         });
