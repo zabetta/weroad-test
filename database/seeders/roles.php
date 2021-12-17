@@ -17,10 +17,6 @@ class roles extends Seeder
     public function run()
     {
         $json = Storage::disk('local')->get('public/roles.json');
-
-        dd($json);
-
-
         $roles = json_decode($json);
 
         foreach ($roles as $key => $value) {
