@@ -16,7 +16,7 @@ class travels extends Seeder
      */
     public function run()
     {
-        $json = Storage::disk('local')->get('travels.json');
+        $json = Storage::disk('local')->get('public/travels.json');
 
         $travels = json_decode($json);
 

@@ -16,7 +16,7 @@ class tours extends Seeder
      */
     public function run()
     {
-        $json = Storage::disk('local')->get('tours.json');
+        $json = Storage::disk('local')->get('public/tours.json');
 
         $tours = json_decode($json);
 
