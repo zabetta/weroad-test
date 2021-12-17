@@ -25,14 +25,14 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 - ** Rename .env.example in .env and use "php artisan key:generate" to generate laravel APP_KEY
 - ** Set up all DB_* env variables to your mysql server 
     ( IF YOU NEED IT YOU CAN USE A MYSQL CONTAINER with this command:
-     "docker run -p 127.0.0.1:3333:3306  --name my-mariadb -e MARIADB_ROOT_PASSWORD=t00r -d mariadb:latest" )
+     `docker run -p 127.0.0.1:3333:3306  --name my-mariadb -e MARIADB_ROOT_PASSWORD=t00r -d mariadb:latest` )
      and create a DB. I called mine weroad_db
 
-- ** run php artisan migrate to create DB
-- ** run php artisan migrate db:seed travels
-- ** run php artisan migrate db:seed tours
-- ** run php artisan migrate db:seed roles
-- ** run php artisan migrate db:seed create_admin
+- ** run $ php artisan migrate to create DB
+- ** run $ php artisan db:seed travels
+- ** run $ php artisan db:seed tours
+- ** run $ php artisan db:seed roles
+- ** run $ php artisan db:seed create_admin
 
 and then...
 
