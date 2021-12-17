@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\Models\Travel;
 use App\Models\Tour;
+
+use Auth;
 
 class TravelController extends Controller
 {
@@ -161,8 +164,16 @@ class TravelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {       
+
+        dd( Auth::user()->getRole() );
+
+        if (Gate::allows('edit-travel')) {
+            echo 'Allowed';
+        } else {
+            echo 'Not Allowed';
+        }
+         
     }
 
     /**
@@ -174,7 +185,11 @@ class TravelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (Gate::allows('update-travel')) {
+            echo 'Allowed';
+        } else {
+            echo 'Not Allowed';
+        }
     }
 
     /**

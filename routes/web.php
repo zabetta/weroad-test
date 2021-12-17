@@ -33,8 +33,8 @@ Route::get('/tours/create', [TourController::class,'create'])->middleware(['auth
 Route::post('/tours/save', [TourController::class,'store'])->name('tours.store');
 
 //travel edit and update (if auth) (4)
-Route::get('/travels/{id}', [TravelController::class,'edit'])->middleware(['auth'])->name('travels.edit');
-Route::put('/travels/store', [TravelrController::class,'store'])->name('travels.store');
+Route::get('/travels/edit/{id}', [TravelController::class,'edit'])->middleware(['auth'])->name('travels.edit');
+Route::put('/travels/store', [TravelController::class,'store'])->name('travels.store');
 
 //single travel by slug (6)
 Route::get('/travels/{slug}', [TravelController::class,'showBySlug'])->name('travels.details');

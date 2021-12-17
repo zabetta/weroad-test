@@ -13,8 +13,9 @@ class CreateUserRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_role', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('roles_users', function (Blueprint $table) {
+            $table->uuid('role_id');
+            $table->uuid('user_id');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateUserRoleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('roles_users');
     }
 }
