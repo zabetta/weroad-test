@@ -21,7 +21,8 @@ class Tour extends Model
         'price'
     ];
 
-    public function getTravel(){
+    public function getTravel()
+    {
         return $this->belongsTo(Travel::class, 'travelId', 'id');
     }
 }

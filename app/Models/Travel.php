@@ -23,7 +23,8 @@ class Travel extends Model
         'moods',
     ];
 
-    public function tours(){
+    public function tours()
+    {
         return $this->hasMany(Tour::class)->get();
     }
     protected $casts = [

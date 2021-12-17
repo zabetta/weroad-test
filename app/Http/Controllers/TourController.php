@@ -18,8 +18,9 @@ class TourController extends Controller
     {
         $tours =  DB::table('tours')->paginate(2);
 
-        if (null == $tours)
+        if (null == $tours) {
             abort(404);
+        }
 
         return view('public.tour.index', ['tours' => $tours]);
     }
@@ -42,7 +43,6 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validated = $request->validate([
             'travelId' => 'required',
             'name' => 'required',
@@ -50,7 +50,7 @@ class TourController extends Controller
             'endingDate' => 'required',
             'price' => 'required'
         ]);
-        
+
 
         // TODO check starting date and endingdate with number of nights
 
@@ -61,26 +61,20 @@ class TourController extends Controller
             'endingDate' => $request->input('endingDate'),
             'price' => (int)$request->input('price')*100,
         ];
-        
+
         try {
-            
             Tour::create($data);
-            
-            
         } catch (\Illuminate\Database\QueryException $exception) {
-                
             return view('admin.tour.create', [
-                'travel' => Travel::find($request->input('travelId')), 
+                'travel' => Travel::find($request->input('travelId')),
                 'messageKo' => $exception->errorInfo
             ]);
-            
         }
 
         return view('admin.tour.create', [
             'messageOk' => 'Tour created',
             'travel' => Travel::find($request->input('travelId'))
         ]);
-        
     }
 
     /**
@@ -91,18 +85,17 @@ class TourController extends Controller
      */
     public function show($id)
     {
-
-        if ( null == $id )
+        if (null == $id) {
             abort(404);
-        
+        }
+
         $tourData = Tour::find($id);
         $travelData = $tourData->getTravel()->first();
-        $travelData->moods = json_decode( $travelData->moods );
+        $travelData->moods = json_decode($travelData->moods);
 
         return view('public.tour.show', [
             'tour' => $tourData,
-            'travel' => $travelData 
+            'travel' => $travelData
         ]);
     }
-
 }

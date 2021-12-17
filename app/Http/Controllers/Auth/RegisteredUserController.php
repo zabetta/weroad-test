@@ -23,13 +23,11 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-
         if (Gate::allows('user-create')) {
             $roles = Role::all();
             return view('auth.register', ['roles' => $roles ]);
         }
         abort(403);
-        
     }
 
     /**
@@ -57,14 +55,14 @@ class RegisteredUserController extends Controller
                 'user_id' => $user->id,
                 'role_id' => $request->role_id
             ]);
-    
+
             event(new Registered($user));
-    
+
             Auth::login($user);
-    
+
             return redirect(RouteServiceProvider::HOME);
         } else {
             abort(403);
-        }        
+        }
     }
 }

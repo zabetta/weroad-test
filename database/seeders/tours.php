@@ -16,11 +16,10 @@ class tours extends Seeder
      */
     public function run()
     {
-     
         $json = Storage::disk('local')->get('tours.json');
 
         $tours = json_decode($json);
-  
+
         foreach ($tours as $key => $value) {
             Tour::create([
                 "id" => $value->id,

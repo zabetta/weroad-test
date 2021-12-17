@@ -27,8 +27,7 @@ class TravelController extends Controller
      */
     public function index()
     {
-     
-        $travels = Travel::paginate( $this->paginationValue );
+        $travels = Travel::paginate($this->paginationValue);
 
         return view('public.travel.index', ['travels'=> $travels]);
     }
@@ -68,7 +67,7 @@ class TravelController extends Controller
             'slug' => $request->input('slug'),
             'description' => $request->input('description'),
             'numberOfDays' => $request->input('numberOfDays'),
-            'moods' => json_encode ([
+            'moods' => json_encode([
                 'nature' => $request->input('nature'),
                 'relax' => $request->input('relax'),
                 'history' => $request->input('history'),
@@ -80,7 +79,6 @@ class TravelController extends Controller
         try {
             Travel::create($data);
         } catch (\Illuminate\Database\QueryException $exception) {
-                   
             return view('admin.travel.create', ['messageKo' => $exception->errorInfo]);
         }
 
@@ -95,10 +93,10 @@ class TravelController extends Controller
      */
     public function showBySlug($slug)
     {
-        $travel = Travel::where('slug',$slug)->firstOrFail();
-        $tours = Tour::where('travelId', $travel->id)->orderBy('startingDate')->paginate( $this->paginationValue );
+        $travel = Travel::where('slug', $slug)->firstOrFail();
+        $tours = Tour::where('travelId', $travel->id)->orderBy('startingDate')->paginate($this->paginationValue);
 
-        return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);   
+        return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);
     }
 
     /**
@@ -110,36 +108,38 @@ class TravelController extends Controller
     public function filterTours(Request $request)
     {
         $request->flash();
-        
+
         $validated = $request->validate([
             'travelId' => 'required'
         ]);
 
-        $travel = Travel::where('id',$request->travelId)->firstOrFail();
+        $travel = Travel::where('id', $request->travelId)->firstOrFail();
         $travel->moods = json_decode($travel->moods);
 
         $tours = Tour::where('travelId', $travel->id);
-        if (isset($request->priceFrom))
+        if (isset($request->priceFrom)) {
             $tours->where('price', '>=', $request->priceFrom);
-        if (isset($request->priceTo))
-            $tours->where( 'price', '<=', $request->priceTo);
-        if (isset($request->startingDate)){
-            $tours->where( 'startingDate', '>=', $request->startingDate);
         }
-        if (isset($request->endingDate)){
-            $tours->where( 'endingDate', '<=', $request->endingDate);
+        if (isset($request->priceTo)) {
+            $tours->where('price', '<=', $request->priceTo);
         }
-        if (isset($request->sortingPrice)){
+        if (isset($request->startingDate)) {
+            $tours->where('startingDate', '>=', $request->startingDate);
+        }
+        if (isset($request->endingDate)) {
+            $tours->where('endingDate', '<=', $request->endingDate);
+        }
+        if (isset($request->sortingPrice)) {
             $tours->orderBy('price', $request->sortingPrice);
         }
-           
-        $tours = $tours->paginate( $this->paginationValue );
 
-        
+        $tours = $tours->paginate($this->paginationValue);
+
+
         $sortedResult = $tours->getCollection()->sortBy('startingDate')->values();
         $tours->setCollection($sortedResult);
-        
-        return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);   
+
+        return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);
     }
 
     /**
@@ -150,14 +150,13 @@ class TravelController extends Controller
      */
     public function show($id)
     {
-        $travel = Travel::where('id',$id)->firstOrFail();
-        
+        $travel = Travel::where('id', $id)->firstOrFail();
+
         $travel->moods = json_decode($travel->moods);
-    
-        $tours = Tour::where('travelId', $travel->id)->paginate( $this->paginationValue );
+
+        $tours = Tour::where('travelId', $travel->id)->paginate($this->paginationValue);
 
         return view('public.travel.show', ['travel'=> $travel, 'tours' =>$tours]);
-        
     }
 
 
@@ -168,18 +167,16 @@ class TravelController extends Controller
      * @return \Illuminate\View\View
      */
     public function edit($id)
-    {       
-
+    {
         $travel = Travel::find($id);
 
         $travel->moods = json_decode($travel->moods);
 
         if (Gate::allows('edit-travel')) {
-            return view('admin.travel.edit',['travel' => $travel]);
+            return view('admin.travel.edit', ['travel' => $travel]);
         } else {
             abort(403);
         }
-         
     }
 
     /**
@@ -209,7 +206,7 @@ class TravelController extends Controller
                 'slug' => $request->input('slug'),
                 'description' => $request->input('description'),
                 'numberOfDays' => $request->input('numberOfDays'),
-                'moods' => json_encode ([
+                'moods' => json_encode([
                     'nature' => $request->input('nature'),
                     'relax' => $request->input('relax'),
                     'history' => $request->input('history'),
@@ -227,10 +224,9 @@ class TravelController extends Controller
                     'travel' => $travel,
                     'messageOk' => 'Travel Updated'
                 ]);
-                
             } catch (\Illuminate\Database\QueryException $exception) {
-                return view('admin.travel.edit',['id' => $request->input('id'),'messageKo' => $exception->errorInfo]);
-            }       
+                return view('admin.travel.edit', ['id' => $request->input('id'),'messageKo' => $exception->errorInfo]);
+            }
         } else {
             abort(403);
         }

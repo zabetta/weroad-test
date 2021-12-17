@@ -16,11 +16,10 @@ class travels extends Seeder
      */
     public function run()
     {
-
         $json = Storage::disk('local')->get('travels.json');
 
         $travels = json_decode($json);
-  
+
         foreach ($travels as $key => $value) {
             Travel::create([
                 "id" => $value->id,
@@ -28,12 +27,12 @@ class travels extends Seeder
                 "name" => $value->name,
                 "description" => $value->description,
                 "numberOfDays" => $value->numberOfDays,
-                "moods" => json_encode( $value->moods )
+                "moods" => json_encode($value->moods)
             ]);
         }
 
         // $json = Storage::disk('local')->get('travels.json');
-        
+
         // $travels = json_decode($json, true);
 
         // foreach ($travels as $key => $value){
