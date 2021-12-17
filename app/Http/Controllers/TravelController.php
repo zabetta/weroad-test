@@ -23,7 +23,7 @@ class TravelController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -36,7 +36,7 @@ class TravelController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -47,7 +47,7 @@ class TravelController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function store(Request $request)
     {
@@ -91,7 +91,7 @@ class TravelController extends Controller
      * Display the specified resource finding it by slug.
      *
      * @param string $slug
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function showBySlug($slug)
     {
@@ -104,8 +104,8 @@ class TravelController extends Controller
     /**
      * Display the specified resource finding it by slug filtered.
      *
-     * @param Resource $resource
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
      */
     public function filterTours(Request $request)
     {
@@ -146,7 +146,7 @@ class TravelController extends Controller
      * Display the specified resource finding it by id\.
      *
      * @param string $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show($id)
     {
@@ -165,7 +165,7 @@ class TravelController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {       
@@ -186,7 +186,7 @@ class TravelController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function update(Request $request)
     {
@@ -223,27 +223,16 @@ class TravelController extends Controller
                 $travel = Travel::find($request->input('id'));
                 $travel->moods = json_decode($travel->moods);
                 return view('admin.travel.edit', [
-                    $request->input('id'),
+                    'id' => $request->input('id'),
                     'travel' => $travel,
                     'messageOk' => 'Travel Updated'
                 ]);
                 
             } catch (\Illuminate\Database\QueryException $exception) {
-                return view('admin.travel.edit',[$request->input('id'),'messageKo' => $exception->errorInfo]);
+                return view('admin.travel.edit',['id' => $request->input('id'),'messageKo' => $exception->errorInfo]);
             }       
         } else {
             abort(403);
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
